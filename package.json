@@ -1,0 +1,15 @@
+{
+  "name": "operam-assessment",
+  "version": "1.0.0",
+  "description": "a basic webscraper and then some",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "BQN",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4",
+    "request": "^2.81.0"
+  }
+}
