@@ -4,10 +4,12 @@ const cheerio = require('cheerio');
 const app = express();
 
 var rootId = '82127';
-var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
+var accumulator = [];
 
 var scrape = () => {
-  var accumulator = [];
+  console.log('calling on rootId: ', rootId);
+  var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
+  console.log('url: ', url);
   request(url, function(error, response, body) {
     // console.log('error: \n', error);
     // console.log('response: \n', response);
@@ -16,17 +18,18 @@ var scrape = () => {
       console.log('no error... \nloading body to cheerio...');
       const $ = cheerio.load(body);
       const selector = 'synset[synsetid="' + rootId + '"]';
-      // console.log('selector: ', selector);
+      console.log('selector: ', selector);
       const json = {name: '', size: 0};
       $(selector).filter(function() {
         var data = $(this);
-        console.log('"data" after filtering var "selector": \n', data);
+        // console.log('"data" after filtering var "selector": \n', data);
+        // console.log('data.siblings(): ', data.siblings());
         // console.log('data.attr(): \n', data.attr());
-        // console.log('data.attr().words: ', data.attr().words);
-        // console.log('data.attr().subtree_size: ', data.attr().subtree_size);
-        // console.log('data.attr().synsetid: ', data.attr().synsetid);
-        // console.log('data.children().length: ', data.children().length, '\ntypeof data.children().length: ', typeof data.children().length);
-        // console.log('data.children().first().children(): \n', data.children().first().children());
+        console.log('data.attr().words: ', data.attr().words);
+        console.log('data.attr().subtree_size: ', data.attr().subtree_size);
+        console.log('data.attr().synsetid: ', data.attr().synsetid);
+        console.log('data.children().length: ', data.children().length, '\ntypeof data.children().length: ', typeof data.children().length);
+        // console.log('data.children().last(): \n', data.children().last());
         var {
           words,
           subtree_size,
@@ -37,6 +40,16 @@ var scrape = () => {
         accumulator = accumulator.concat(json);
         // console.log('json after declaration: ', json, '\ntypeof json["size"]: ', typeof json['size']);
         console.log('accumulator: ', accumulator);
+        if (data.children().length > 0) {
+          console.log('current node(' + rootId + ') has ' + data.children().length + ' children...');
+          rootId = data.children().first().attr().synsetid;
+          scrape();
+        } else if (data.children().length === 0) {
+          console.log('current node(' + rootId + ') has no children... next()...')
+          rootId = data.next().attr().synsetid;
+          console.log('rootId: ', rootId);
+          scrape()
+        }
       })
     }
   })
