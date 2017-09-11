@@ -34,7 +34,7 @@ var scrape = (rootId, nameAcc = '') => {
               const newRootId = synsetid;
               scrape(newRootId, json['name']);
             } else {
-              const jsonClone = {name: json['name'] + ' > ' + words, size: subtree_size};
+              const jsonClone = {name: json['name'] + ' > ' + words, size: Number(subtree_size)};
               accumulator.push(jsonClone);
             }
           })
