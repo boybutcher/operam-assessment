@@ -1,7 +1,23 @@
 const express = require('express');
 const request = require('request');
 const cheerio = require('cheerio');
+const mongoose = require('mongoose');
 const app = express();
+
+mongoose.connect('mongodb://localhost/operam-scrape');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('mongoose connected to localhost!');
+});
+
+var treeNodeSchema = mongoose.Schema({
+  name: String,
+  size: Number,
+});
+
+var treeNode = mongoose.model('treeNode', treeNodeSchema)
 
 var accumulator = []; 
 
