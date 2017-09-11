@@ -3,7 +3,7 @@ const request = require('request');
 const cheerio = require('cheerio');
 const app = express();
 
-var accumulator = [];
+var accumulator = []; 
 
 var scrape = (rootId, nameAcc = '') => {
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
@@ -41,7 +41,7 @@ var scrape = (rootId, nameAcc = '') => {
           })
         } 
       })
-      console.log('accumulator: ', accumulator);
+      console.log('accumulator: \n', accumulator);
     }
   })
 }
@@ -53,7 +53,7 @@ app.get('/scrape', function(req, res) {
 })
 
 app.get('/', function(req, res) {
-  res.send('this is the base page')
+  res.send('this is the base page');
 })
 
 app.listen(3000, function() {
