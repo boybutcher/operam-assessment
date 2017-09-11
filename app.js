@@ -17,7 +17,15 @@ var treeNodeSchema = mongoose.Schema({
   size: Number,
 });
 
-var treeNode = mongoose.model('treeNode', treeNodeSchema)
+var treeNode = mongoose.model('treeNode', treeNodeSchema);
+
+var storeNode = (nodeText, nodeSize) => {
+  treeNode.create({name: nodeText, size: nodeSize}, (err, result) => {
+    if (err) {
+      console.error(err);
+    } 
+  })
+}
 
 var accumulator = []; 
 
@@ -39,6 +47,7 @@ var scrape = (rootId, nameAcc = '') => {
         json['name'] = nameAcc.length === 0 ? words : nameAcc + ' > ' + words;
         json['size'] = Number(subtree_size);
         accumulator.push(json);
+        storeNode(json.name, json.size);
         if (data.children().length > 0) {
           data.children().each(function(i, element) {
             var {
@@ -53,11 +62,12 @@ var scrape = (rootId, nameAcc = '') => {
             } else {
               const jsonClone = {name: json['name'] + ' > ' + words, size: Number(subtree_size)};
               accumulator.push(jsonClone);
+              storeNode(jsonClone.name, jsonClone.size);
             }
           })
         } 
       })
-      console.log('accumulator: \n', accumulator);
+      console.log('accumulator: \n', accumulator, '\naccumulator.length: ', accumulator.length);
     }
   })
 }
@@ -65,12 +75,18 @@ var scrape = (rootId, nameAcc = '') => {
 app.get('/scrape', (req, res) => {
   console.log('sending GET request... init scrape()...');
   scrape('82127');
-  res.send(accumulator);
+  res.send('scraping...');
+});
+
+app.get('/clear', (req, res) => {
+  console.log('clearing database...');
+  res.send('clearing database...');
 })
 
 app.get('/', (req, res) => {
   res.send('this is the base page');
-})
+});
+
 
 app.listen(3000, () => {
   console.log('operam-assessment is listening to port 3000!');
