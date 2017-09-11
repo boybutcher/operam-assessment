@@ -3,11 +3,12 @@ const request = require('request');
 const cheerio = require('cheerio');
 const app = express();
 
-var accumulator = [];
 
 var scrape = (rootId, nameAcc = '') => {
+  var accumulator = [];
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
   request(url, function(error, response, body) {
+    console.log('scraping at ' + url);
     if (!error) {
       const $ = cheerio.load(body);
       const selector = 'synset[synsetid="' + rootId + '"]';
@@ -45,10 +46,14 @@ var scrape = (rootId, nameAcc = '') => {
   })
 }
 
-app.get('/', function(req, res) {
-  console.log('sending GET request...');
+app.get('/scrape', function(req, res) {
+  console.log('sending GET request... init scrape()...');
   scrape('82127');
-  res.send('Drink Me...');
+  res.send(accumulator);
+})
+
+app.get('/', function(req, res) {
+  res.send('this is the base page')
 })
 
 app.listen(3000, function() {
