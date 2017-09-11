@@ -3,10 +3,9 @@ const request = require('request');
 const cheerio = require('cheerio');
 const app = express();
 
-var rootId = '82127';
 var accumulator = [];
 
-var scrape = () => {
+var scrape = (rootId, nameAcc = '') => {
   console.log('calling on rootId: ', rootId);
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
   console.log('url: ', url);
@@ -35,20 +34,20 @@ var scrape = () => {
           subtree_size,
           synsetid,
         } = data.attr();
-        json['name'] = words;
+        json['name'] = nameAcc.length === 0 ? words : nameAcc + ' > ' + words;
         json['size'] = Number(subtree_size);
         accumulator = accumulator.concat(json);
         // console.log('json after declaration: ', json, '\ntypeof json["size"]: ', typeof json['size']);
-        console.log('accumulator: ', accumulator);
         if (data.children().length > 0) {
           console.log('current node(' + rootId + ') has ' + data.children().length + ' children...');
-          rootId = data.children().first().attr().synsetid;
-          scrape();
-        } else if (data.children().length === 0) {
-          console.log('current node(' + rootId + ') has no children... next()...')
-          rootId = data.next().attr().synsetid;
-          console.log('rootId: ', rootId);
-          scrape()
+          data.children().each(function(i, element) {
+            // console.log('this is child: ', i, '\nelement: ', element);
+            const newRootId = $(this).attr().synsetid;
+            console.log('newRootId: ', newRootId);
+            scrape(newRootId, json['name']);
+          })
+        } else {
+          console.log('accumulator: ', accumulator, '\naccumulator.length: ', accumulator.length);
         }
       })
     }
@@ -56,8 +55,8 @@ var scrape = () => {
 }
 
 app.get('/', function(req, res) {
-  console.log('sending GET request to "http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=82127"...');
-  scrape();
+  console.log('sending GET request...');
+  scrape('82127');
   res.send('Drink Me...');
 })
 
