@@ -46,16 +46,16 @@ var scrape = (rootId, nameAcc = '') => {
   })
 }
 
-app.get('/scrape', function(req, res) {
+app.get('/scrape', (req, res) => {
   console.log('sending GET request... init scrape()...');
   scrape('82127');
   res.send(accumulator);
 })
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.send('this is the base page');
 })
 
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('operam-assessment is listening to port 3000!');
 })
