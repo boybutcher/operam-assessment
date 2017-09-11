@@ -3,9 +3,9 @@ const request = require('request');
 const cheerio = require('cheerio');
 const app = express();
 
+var accumulator = [];
 
 var scrape = (rootId, nameAcc = '') => {
-  var accumulator = [];
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
   request(url, function(error, response, body) {
     console.log('scraping at ' + url);
