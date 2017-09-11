@@ -27,6 +27,16 @@ var storeNode = (nodeText, nodeSize) => {
   })
 }
 
+var clearCollection = () => {
+  treeNode.remove({}, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('database cleared!');
+    }
+  })
+}
+
 var accumulator = []; 
 
 var scrape = (rootId, nameAcc = '') => {
@@ -67,7 +77,7 @@ var scrape = (rootId, nameAcc = '') => {
           })
         } 
       })
-      console.log('accumulator: \n', accumulator, '\naccumulator.length: ', accumulator.length);
+      console.log('accumulator.length: ', accumulator.length);
     }
   })
 }
@@ -80,10 +90,12 @@ app.get('/scrape', (req, res) => {
 
 app.get('/clear', (req, res) => {
   console.log('clearing database...');
+  clearCollection();
   res.send('clearing database...');
 })
 
 app.get('/', (req, res) => {
+  console.log('on home page');
   res.send('this is the base page');
 });
 
