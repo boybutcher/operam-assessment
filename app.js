@@ -13,7 +13,7 @@ db.once('open', function() {
 });
 
 var treeNodeSchema = mongoose.Schema({
-  name: String,
+  name: {type: String, unique: true},
   size: Number,
 });
 
@@ -33,6 +33,16 @@ var clearCollection = () => {
       console.error(err);
     } else {
       console.log('database cleared!');
+    }
+  })
+}
+
+var fetchCollection = () => {
+  treeNode.find({}, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('fetched: \n', result);
     }
   })
 }
@@ -92,6 +102,12 @@ app.get('/clear', (req, res) => {
   console.log('clearing database...');
   clearCollection();
   res.send('clearing database...');
+})
+
+app.get('/fetch', (req, res) => {
+  console.log('fetching from database...')
+  fetchCollection();
+  res.send('fetching from database...')
 })
 
 app.get('/', (req, res) => {
