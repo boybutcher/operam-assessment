@@ -38,7 +38,13 @@ var fetchCollection = () => {
     if (err) {
       console.error(err);
     } else {
-      console.log('fetched: \n', result);
+      console.log('fetched!');
+      for (var i = 0; i < result.length; i++) {
+        var currentNode = result[i];
+        var splitName = currentNode.name.split(' > ');
+        // console.log('currentNode: ', currentNode);
+        console.log('splitName: ', splitName);
+      }
     }
   })
 }
