@@ -1,51 +1,8 @@
 const express = require('express');
 const request = require('request');
 const cheerio = require('cheerio');
-const mongoose = require('mongoose');
+const db = require('./database.js');
 const app = express();
-
-mongoose.connect('mongodb://localhost/operam-scrape');
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('mongoose connected to localhost!');
-});
-
-var treeNodeSchema = mongoose.Schema({
-  name: {type: String, unique: true},
-  size: Number,
-});
-
-var treeNode = mongoose.model('treeNode', treeNodeSchema);
-
-var storeNode = (nodeText, nodeSize) => {
-  treeNode.create({name: nodeText, size: nodeSize}, (err, result) => {
-    if (err) {
-      console.error(err);
-    } 
-  })
-}
-
-var clearCollection = () => {
-  treeNode.remove({}, (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log('database cleared!');
-    }
-  })
-}
-
-var fetchCollection = () => {
-  treeNode.find({}, (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log('fetched: \n', result);
-    }
-  })
-}
 
 var accumulator = []; 
 
@@ -67,7 +24,7 @@ var scrape = (rootId, nameAcc = '') => {
         json['name'] = nameAcc.length === 0 ? words : nameAcc + ' > ' + words;
         json['size'] = Number(subtree_size);
         accumulator.push(json);
-        storeNode(json.name, json.size);
+        db.storeNode(json.name, json.size);
         if (data.children().length > 0) {
           data.children().each(function(i, element) {
             var {
@@ -82,7 +39,7 @@ var scrape = (rootId, nameAcc = '') => {
             } else {
               const jsonClone = {name: json['name'] + ' > ' + words, size: Number(subtree_size)};
               accumulator.push(jsonClone);
-              storeNode(jsonClone.name, jsonClone.size);
+              db.storeNode(jsonClone.name, jsonClone.size);
             }
           })
         } 
@@ -100,13 +57,13 @@ app.get('/scrape', (req, res) => {
 
 app.get('/clear', (req, res) => {
   console.log('clearing database...');
-  clearCollection();
+  db.clearCollection();
   res.send('clearing database...');
 })
 
 app.get('/fetch', (req, res) => {
   console.log('fetching from database...')
-  fetchCollection();
+  db.fetchCollection();
   res.send('fetching from database...')
 })
 
