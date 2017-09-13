@@ -12,6 +12,8 @@
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.4",
     "mongoose": "^4.11.11",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "request": "^2.81.0"
   }
 }
