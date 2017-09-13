@@ -52,6 +52,7 @@ var scrape = (rootId, nameAcc = '') => {
 app.get('/scrape', (req, res) => {
   console.log('sending GET request... init scrape()...');
   scrape('82127');
+  // scrape('63388');
   res.send('scraping...');
 });
 

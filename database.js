@@ -9,7 +9,7 @@ db.once('open', function() {
 });
 
 var treeNodeSchema = mongoose.Schema({
-  name: {type: String, unique: true},
+  name: String,
   size: Number,
 });
 
@@ -73,9 +73,7 @@ var checkAddChildren = (arr, tree) => {
         children.push(newChildNode);
         reference = newChildNode;
       } else if (children[j].name === arr[i].name) {
-        if (children[j].size === undefined && arr[i].size) {
-          children[j].size = arr[i].size;
-        }
+        children[j].size += arr[i].size;
         reference = children[j];
         break;
       }
@@ -87,7 +85,7 @@ var checkAddChildren = (arr, tree) => {
 var createNodes = (arr) => {
   var result = [];
   for (var i = 0; i < arr.length; i++) {
-    var template = {name: arr[i], size: undefined, children: []};
+    var template = {name: arr[i], size: null, children: []};
     result.push(template);
   }
   return result;
