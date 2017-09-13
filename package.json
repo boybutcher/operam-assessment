@@ -4,7 +4,7 @@
   "description": "a basic webscraper and then some",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "concurrently \"nodemon server.js\" \"cd client && npm start\""
   },
   "author": "BQN",
   "license": "ISC",
