@@ -40,7 +40,6 @@ var fetchCollection = () => {
       console.error(err);
     } else {
       console.log('fetched!');
-      // console.log('result: ', result);
       console.log(treeConstruct(result));  
     }
   })

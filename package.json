@@ -4,7 +4,7 @@
   "description": "a basic webscraper and then some",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "BQN",
   "license": "ISC",
