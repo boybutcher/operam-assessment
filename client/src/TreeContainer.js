@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class TreeContainer extends Component {
+  componentWillMount() {
+    this.props.fetchTree()
+  }
+
   render() {
     
     var {

@@ -9,12 +9,17 @@ class App extends Component {
     this.state = {
       tree: [],
     }
+    this.fetchTree = this.fetchTree.bind(this);
+  }
+
+  fetchTree() {
+    fetch('/fetch');
   }
 
   render() {
     return (
       <div className="App">
-        <TreeContainer tree={this.state.tree}/>
+        <TreeContainer tree={this.state.tree} fetchTree={this.fetchTree}/>
         <ControlPanel />
       </div>
     );
