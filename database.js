@@ -40,47 +40,11 @@ var fetchCollection = () => {
       console.error(err);
     } else {
       console.log('fetched!');
-      for (var i = 0; i < result.length; i++) {
-        var currentNode = result[i];
-        var splitName = currentNode.name.split(' > ');
-        // console.log('currentNode: ', currentNode);
-        console.log('splitName: ', splitName);
-        for (var j = 0; j < splitName.length; j++) {
-          var template = {name: '', size: undefined, children: []};
-        }
-      }
+      // console.log('result: ', result);
+      console.log(treeConstruct(result));  
     }
   })
-  console.log('result: ', result);
 }
-
-//TEST DATA FOR treeConstruct()
-var testSet = [
-  {
-    name: 'ImageNet > Natural > Radiator > Radio Source',
-    size: 200,
-  },
-  // {
-  //   name: 'ImageNet > Plant Flora',
-  //   size: 100,
-  // },
-  // {
-  //   name: 'ImageNet > Natural > Rock, Stone',
-  //   size: 73,
-  // },
-  // {
-  //   name: 'ImageNet > Geological',
-  //   size: 762,
-  // },
-  // {
-  //   name: 'ImageNet > Natural > Asterism',
-  //   size: 123,
-  // },
-  // {
-  //   name: 'ImageNet > Natural > Consolidation',
-  //   size: 8323,
-  // },
-];
 
 var treeConstruct = (arr) => {
   var tree;
@@ -91,7 +55,6 @@ var treeConstruct = (arr) => {
     currentObjs[currentObjs.length - 1].size = arr[i].size;
     tree = checkAddChildren(currentObjs, tree);
   }
-  console.log('tree: ', tree);
   return tree;
 };
 
@@ -100,6 +63,9 @@ var checkAddChildren = (arr, tree) => {
     tree = arr[0];
   }
   var reference = tree;
+  if (arr.length === 1) {
+    reference.size = arr[0].size;
+  }
   for (var i = 1; i < arr.length; i++) {
     var children = reference.children;
     for (var j = children.length - 1; j >= -1; j--) {
@@ -108,6 +74,9 @@ var checkAddChildren = (arr, tree) => {
         children.push(newChildNode);
         reference = newChildNode;
       } else if (children[j].name === arr[i].name) {
+        if (children[j].size === undefined && arr[i].size) {
+          children[j].size = arr[i].size;
+        }
         reference = children[j];
         break;
       }
@@ -124,9 +93,6 @@ var createNodes = (arr) => {
   }
   return result;
 };
-
-var newThing = treeConstruct(testSet);
-
 
 module.exports.treeNode = treeNode;
 module.exports.storeNode = storeNode;
