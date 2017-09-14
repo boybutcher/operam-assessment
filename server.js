@@ -72,12 +72,6 @@ app.get('/fetch', (req, res) => {
   });
 })
 
-app.get('/', (req, res) => {
-  console.log('on home page');
-  res.send('this is the base page');
-});
-
-
 app.listen(3001, () => {
   console.log('operam-assessment is listening to port 3001!');
 })
