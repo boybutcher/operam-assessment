@@ -33,14 +33,16 @@ var clearCollection = () => {
   })
 }
 
-var fetchCollection = () => {
+var fetchCollection = (callback) => {
   var result;
   treeNode.find({}, (err, result) => {
     if (err) {
-      console.error(err);
+      callback(err, null);
     } else {
       console.log('fetched!');
-      console.log(treeConstruct(result));  
+      var assembledTree = treeConstruct(result);
+      console.log('assembledTree: ', assembledTree);
+      callback(null, assembledTree);
     }
   })
 }

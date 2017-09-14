@@ -2,6 +2,7 @@ const express = require('express');
 const request = require('request');
 const cheerio = require('cheerio');
 const db = require('./database.js');
+
 const app = express();
 
 var accumulator = []; 
@@ -52,7 +53,6 @@ var scrape = (rootId, nameAcc = '') => {
 app.get('/scrape', (req, res) => {
   console.log('sending GET request... init scrape()...');
   scrape('82127');
-  // scrape('63388');
   res.send('scraping...');
 });
 
@@ -64,8 +64,13 @@ app.get('/clear', (req, res) => {
 
 app.get('/fetch', (req, res) => {
   console.log('fetching from database...')
-  db.fetchCollection();
-  res.send('fetching from database...')
+  db.fetchCollection((err, result) => {
+    if (err){
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
 })
 
 app.get('/', (req, res) => {

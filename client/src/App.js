@@ -13,13 +13,24 @@ class App extends Component {
   }
 
   fetchTree() {
-    fetch('/fetch');
+    fetch('/fetch')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({
+          tree: data
+        })
+      }) 
+      .catch(err => {
+        console.error(err);
+      })
   }
 
   render() {
     return (
       <div className="App">
-        <TreeContainer tree={this.state.tree} fetchTree={this.fetchTree}/>
+        <TreeContainer tree={this.state.tree} fetchTree={this.fetchTree} />
         <ControlPanel />
       </div>
     );
