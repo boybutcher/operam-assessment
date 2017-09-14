@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TreeNode from './TreeNode';
 
 class TreeContainer extends Component {
   componentWillMount() {
@@ -17,7 +18,7 @@ class TreeContainer extends Component {
       )
     } else {
       return (
-        <div>filler tree</div>
+        <TreeNode node={tree} />
       )
     }
   }

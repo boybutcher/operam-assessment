@@ -58,8 +58,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        <TreeContainer tree={tree} fetchTree={fetchTree} />
         <ControlPanel tree={tree} clearDatabase={clearDatabase} initScrape={initScrape}/>
+        <TreeContainer tree={tree} fetchTree={fetchTree} />
       </div>
     );
   }
