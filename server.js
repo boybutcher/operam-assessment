@@ -63,7 +63,6 @@ app.get('/clear', (req, res) => {
 })
 
 app.get('/fetch', (req, res) => {
-  console.log('fetching from database...')
   db.fetchCollection((err, result) => {
     if (err){
       res.send(err);

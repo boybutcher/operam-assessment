@@ -39,9 +39,7 @@ var fetchCollection = (callback) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log('fetched!');
-      var assembledTree = treeConstruct(result);
-      console.log('assembledTree: ', assembledTree);
+      var assembledTree = treeConstruct(result) || [];
       callback(null, assembledTree);
     }
   })
