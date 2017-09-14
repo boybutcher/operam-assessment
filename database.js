@@ -23,18 +23,17 @@ var storeNode = (nodeText, nodeSize) => {
   })
 }
 
-var clearCollection = () => {
+var clearCollection = (callback) => {
   treeNode.remove({}, (err, result) => {
     if (err) {
-      console.error(err);
+      callback(err, null);
     } else {
-      console.log('database cleared!');
+      callback(null, result);
     }
   })
 }
 
 var fetchCollection = (callback) => {
-  var result;
   treeNode.find({}, (err, result) => {
     if (err) {
       callback(err, null);

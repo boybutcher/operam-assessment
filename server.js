@@ -57,14 +57,18 @@ app.get('/scrape', (req, res) => {
 });
 
 app.get('/clear', (req, res) => {
-  console.log('clearing database...');
-  db.clearCollection();
-  res.send('clearing database...');
+  db.clearCollection((err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
 })
 
 app.get('/fetch', (req, res) => {
   db.fetchCollection((err, result) => {
-    if (err){
+    if (err) {
       res.send(err);
     } else {
       res.send(result);

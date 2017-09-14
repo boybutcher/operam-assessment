@@ -10,6 +10,7 @@ class App extends Component {
       tree: [],
     }
     this.fetchTree = this.fetchTree.bind(this);
+    this.clearDatabase = this.clearDatabase.bind(this);
   }
 
   fetchTree() {
@@ -20,8 +21,21 @@ class App extends Component {
       .then(data => {
         this.setState({
           tree: data
-        })
+        });
       }) 
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+  clearDatabase() {
+    console.log('clearing database');
+    fetch('/clear')
+      .then(response => {
+        this.setState({
+          tree: [],
+        });
+      })
       .catch(err => {
         console.error(err);
       })
@@ -31,7 +45,7 @@ class App extends Component {
     return (
       <div className="App">
         <TreeContainer tree={this.state.tree} fetchTree={this.fetchTree} />
-        <ControlPanel />
+        <ControlPanel clearDatabase={this.clearDatabase} />
       </div>
     );
   }
