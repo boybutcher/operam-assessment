@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
 import TreeContainer from './TreeContainer';
 import ControlPanel from './ControlPanel';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class App extends Component {
     }
     this.fetchTree = this.fetchTree.bind(this);
     this.clearDatabase = this.clearDatabase.bind(this);
+    this.initScrape = this.initScrape.bind(this);
   }
 
   fetchTree() {
@@ -29,7 +30,6 @@ class App extends Component {
   }
 
   clearDatabase() {
-    console.log('clearing database');
     fetch('/clear')
       .then(response => {
         this.setState({
@@ -41,11 +41,24 @@ class App extends Component {
       })
   }
 
+  initScrape() {
+    console.log('preparing to scrape')
+  }
+
   render() {
+    var {
+      state: {
+        tree,
+      },
+      fetchTree,
+      clearDatabase,
+      initScrape,
+    } = this;
+
     return (
       <div className="App">
-        <TreeContainer tree={this.state.tree} fetchTree={this.fetchTree} />
-        <ControlPanel clearDatabase={this.clearDatabase} />
+        <TreeContainer tree={tree} fetchTree={fetchTree} />
+        <ControlPanel tree={tree} clearDatabase={clearDatabase} initScrape={initScrape}/>
       </div>
     );
   }
