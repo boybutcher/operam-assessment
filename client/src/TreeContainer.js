@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TreeNode from './TreeNode';
+import './TreeContainer.css';
 
 class TreeContainer extends Component {
   componentWillMount() {
@@ -14,11 +15,15 @@ class TreeContainer extends Component {
 
     if (tree.length === 0) {
       return (
-        <div>tree is empty!</div>
+        <div className='TreeContainer'>
+          tree is empty!
+        </div>
       )
     } else {
       return (
-        <TreeNode node={tree} />
+        <div className='TreeContainer'>
+          <TreeNode node={tree} />
+        </div>
       )
     }
   }

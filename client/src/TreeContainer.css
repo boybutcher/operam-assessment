@@ -1,0 +1,5 @@
+.TreeContainer {
+  margin-left: 20%;
+  width: 80%;
+  overflow-x: scroll;
+}

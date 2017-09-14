@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import './TreeNode.css';
 
 class TreeNode extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: true,
+      visible: false,
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -18,6 +19,7 @@ class TreeNode extends Component {
   render() {
     var childNodes;
     var classObj;
+    var arrow;
     var style;
 
     if (this.props.node.children !== null) {
@@ -31,8 +33,10 @@ class TreeNode extends Component {
 
       if (this.state.visible) {
         classObj = 'toggleable-down';
+        arrow = '▼';
       } else {
         classObj = 'toggleable-up';
+        arrow = '▶';
       }
     }
 
@@ -41,14 +45,14 @@ class TreeNode extends Component {
     }
 
     return (
-      <div>
-        <ul onClick={this.toggle} className={classObj}> 
-          {this.props.node.name}
-          <ul style={style}>
-            {childNodes}
-          </ul>
+      <ul> 
+        <div className={classObj} onClick={this.toggle}>
+          <a className='arrow'>{arrow}</a> {this.props.node.name} ({this.props.node.size})
+        </div>
+        <ul style={style}>
+          {childNodes}
         </ul>
-      </div>
+      </ul>
     )
   }
 }

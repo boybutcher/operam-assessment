@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ControlPanel.css';
 
 class ControlPanel extends Component {
   render() {
@@ -22,7 +23,7 @@ class ControlPanel extends Component {
       )
 
     return (
-      <div>
+      <div className='ControlPanel'>
         <h3>Operam Scraper</h3>
         {buttons}
         <div>Developed by Bryan Nguyen</div>
