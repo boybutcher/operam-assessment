@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // loading: false,
       tree: [],
     }
     this.fetchTree = this.fetchTree.bind(this);
@@ -42,7 +43,7 @@ class App extends Component {
   }
 
   initScrape() {
-    console.log('preparing to scrape')
+    fetch('/scrape')
   }
 
   render() {
