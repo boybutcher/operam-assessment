@@ -9,6 +9,9 @@ git clone https://github.com/boybutcher/operam-assessment.git
 cd operam-assessment
 
 npm install
+cd client
+npm install
+cd ..
 
 npm start
 ```
