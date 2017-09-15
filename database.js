@@ -38,6 +38,7 @@ var fetchCollection = (callback) => {
     if (err) {
       callback(err, null);
     } else {
+      // if no data is stored in the database, return an empty array
       var assembledTree = treeConstruct(result) || [];
       callback(null, assembledTree);
     }
@@ -56,22 +57,29 @@ var treeConstruct = (arr) => {
   return tree;
 };
 
+//places nodes in tree
 var checkAddChildren = (arr, tree) => {
   if (tree === undefined) {
     tree = arr[0];
   }
+  // tracks which node it's on
   var reference = tree;
+  // if the node name is just 'ImageNet 2011...', set that as the size at the top node
   if (arr.length === 1) {
     reference.size = arr[0].size;
   }
+  //parse through the array
   for (var i = 1; i < arr.length; i++) {
     var children = reference.children;
+    //traverse the tree at the current node
     for (var j = children.length - 1; j >= -1; j--) {
+      //if the node isnt found, insert it
       if (children.length === 0 || j < 0) {
         var newChildNode = Object.assign({}, arr[i]);
         children.push(newChildNode);
         reference = newChildNode;
       } else if (children[j].name === arr[i].name) {
+        // if the node is found, adjust the size accordingly
         children[j].size += arr[i].size;
         reference = children[j];
         break;
@@ -81,6 +89,7 @@ var checkAddChildren = (arr, tree) => {
   return tree;
 };
 
+//structures each node
 var createNodes = (arr) => {
   var result = [];
   for (var i = 0; i < arr.length; i++) {
