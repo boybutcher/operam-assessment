@@ -3,10 +3,6 @@ import TreeNode from './TreeNode';
 import './TreeContainer.css';
 
 class TreeContainer extends Component {
-  componentWillMount() {
-    this.props.fetchTree()
-  }
-
   render() {
     
     var {
@@ -16,7 +12,7 @@ class TreeContainer extends Component {
     if (tree.length === 0) {
       return (
         <div className='TreeContainer'>
-          tree is empty!
+          The tree is empty! Click the 'Scrape Page' button to being scraping.
         </div>
       )
     } else {

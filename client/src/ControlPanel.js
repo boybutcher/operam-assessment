@@ -9,14 +9,18 @@ class ControlPanel extends Component {
     } = this.props;
     
     var buttons = tree.length === 0 ? (
-        <div>
+        <div className='buttonContainer'>
           <button onClick={this.props.initScrape}>Scrape Page</button>
+          <br />
+          <button onClick={this.props.fetchTree}>Fetch Tree</button>          
           <br />
           <button disabled>Clear Database</button>
         </div>
       ) : (
-        <div>
+        <div className='buttonContainer'>
           <button disabled>Scrape Page</button>
+          <br />
+          <button onClick={this.props.fetchTree}>Fetch Tree</button>
           <br />
           <button onClick={this.props.clearDatabase}>Clear Database</button>
         </div>
@@ -24,9 +28,9 @@ class ControlPanel extends Component {
 
     return (
       <div className='ControlPanel'>
-        <h3>Operam Scraper</h3>
+        <h2>Operam Scraper</h2>
         {buttons}
-        <div>Developed by Bryan Nguyen</div>
+        <div>Developed by<br />Bryan Nguyen</div>
         <a href='https://github.com/boybutcher'>GitHub</a>
         <br />
         <a href='https://www.linkedin.com/in/bqnguyen1/'>LinkedIn</a>
