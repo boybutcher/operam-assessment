@@ -17,7 +17,6 @@ class App extends Component {
   }
 
   fetchTree() {
-    console.log('fetchTree()...');
     this.setState({
       loading: true,
     });

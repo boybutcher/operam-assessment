@@ -10,7 +10,6 @@ var accumulator = [];
 var scrape = (rootId = '82127', nameAcc = '') => {
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
   request(url, function(error, response, body) {
-    // console.log('scraping at ' + url);
     if (!error) {
       const $ = cheerio.load(body);
       const selector = 'synset[synsetid="' + rootId + '"]';
