@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "a basic webscraper and then some",
   "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/boybutcher/operam-assessment.git",
+  },
   "scripts": {
-    "start": "concurrently \"nodemon server.js\" \"cd client && npm start\""
+    "start": "concurrently \"nodemon server.js\" \"cd client && npm start\"",
   },
   "author": "BQN",
   "license": "ISC",
