@@ -32,8 +32,9 @@ If you want to clear your database at any given time, click the 'Clear Database'
 ## Planned Updates
 
 - [ ] user feedback when scraping, add a contextual load page
-- [ ] clean up Loading component
 - [ ] throttle request rate from scraping function
+- [ ] turn scrape() in server.js into multiple helper functions
+- [ ] clean up Loading component
 - [ ] make it pretty! (CSS)
 
 ## Stack
