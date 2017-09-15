@@ -28,3 +28,9 @@ When you want to view the scraped data as a rendered tree, click the 'Fetch Tree
 You can click each individual node to expand them, similar to a file system.
 
 If you want to clear your database at any given time, click the 'Clear Database' button on the left. The button will be disabled if the database is already empty.
+
+## Planned Updates
+
+[ ] user feedback when scraping, add a contextual load page
+[ ] clean up Loading component
+[ ] throttle request rate from scraping function
