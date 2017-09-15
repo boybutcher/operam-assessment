@@ -89,7 +89,7 @@ var checkAddChildren = (arr, tree) => {
   return tree;
 };
 
-//structures each node
+//structures each node, return array of nodes(objects)
 var createNodes = (arr) => {
   var result = [];
   for (var i = 0; i < arr.length; i++) {
