@@ -1,5 +1,5 @@
 # Operam Assessment/Scraper
-### Developed by Bryan Nguyen
+### Developed by [Bryan Nguyen](https://www.linkedin.com/in/bqnguyen1/);
 
 A NodeJS based scraper that scrapes the tree [here](http://imagenet.stanford.edu/synset?wnid=n02486410). 
 
