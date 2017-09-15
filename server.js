@@ -7,10 +7,10 @@ const app = express();
 
 var accumulator = []; 
 
-var scrape = (rootId, nameAcc = '') => {
+var scrape = (rootId = '82127', nameAcc = '') => {
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
   request(url, function(error, response, body) {
-    console.log('scraping at ' + url);
+    // console.log('scraping at ' + url);
     if (!error) {
       const $ = cheerio.load(body);
       const selector = 'synset[synsetid="' + rootId + '"]';
@@ -23,7 +23,7 @@ var scrape = (rootId, nameAcc = '') => {
           synsetid,
         } = data.attr();
         json['name'] = nameAcc.length === 0 ? words : nameAcc + ' > ' + words;
-        json['size'] = Number(subtree_size);
+        json['size'] = Number(subtree_size) - 1;
         accumulator.push(json);
         db.storeNode(json.name, json.size);
         if (data.children().length > 0) {
@@ -51,7 +51,7 @@ var scrape = (rootId, nameAcc = '') => {
 }
 
 app.get('/scrape', (req, res) => {
-  scrape('82127');
+  scrape();
 });
 
 app.get('/clear', (req, res) => {
