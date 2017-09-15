@@ -11,9 +11,11 @@ var scrape = (rootId = '82127', nameAcc = '') => {
   var url = 'http://imagenet.stanford.edu/python/tree.py/SubtreeXML?rootid=' + rootId;
   request(url, function(error, response, body) {
     if (!error) {
+      // make returned HTML parseable via Cheerio
       const $ = cheerio.load(body);
       const selector = 'synset[synsetid="' + rootId + '"]';
       const json = {name: '', size: 0};
+      // looks for current nodes attributes
       $(selector).filter(function() {
         var data = $(this);
         var {
@@ -21,6 +23,7 @@ var scrape = (rootId = '82127', nameAcc = '') => {
           subtree_size,
           synsetid,
         } = data.attr();
+        // constructs object for storage
         json['name'] = nameAcc.length === 0 ? words : nameAcc + ' > ' + words;
         json['size'] = Number(subtree_size) - 1;
         accumulator.push(json);
@@ -33,10 +36,12 @@ var scrape = (rootId = '82127', nameAcc = '') => {
               synsetid,
               num_children
             } = $(this).attr()
+            // if the child node has children, run scrape recursively
             if (Number(num_children) !== 0) {
               const newRootId = synsetid;
               scrape(newRootId, json['name']);
             } else {
+              //if a child node doesnt have children, create the objext and stor ein the database
               const jsonClone = {name: json['name'] + ' > ' + words, size: Number(subtree_size) - 1};
               accumulator.push(jsonClone);
               db.storeNode(jsonClone.name, jsonClone.size);
