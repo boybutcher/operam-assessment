@@ -31,6 +31,30 @@ If you want to clear your database at any given time, click the 'Clear Database'
 
 ## Planned Updates
 
-[ ] user feedback when scraping, add a contextual load page
-[ ] clean up Loading component
-[ ] throttle request rate from scraping function
+- [ ] user feedback when scraping, add a contextual load page
+- [ ] clean up Loading component
+- [ ] throttle request rate from scraping function
+- [ ] make it pretty! (CSS)
+
+## Stack
+
+- Client
+  - React via create-react-app
+
+- Server
+  - NodeJS/Express
+    - Request
+    - Cheerio
+
+- Database
+  - MongoDB via Mongoose
+
+
+
+
+
+
+
+
+
+
